@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📘 Grade Calculator</h1>
+        <form method="POST">
+            <label>Number of Absences:</label>
+            <input type="number" name="absences" required><br>
+
+            <label>Prelim Exam Grade:</label>
+            <input type="number" step="0.01" name="prelim_exam" required><br>
+
+            <label>Quizzes Grade:</label>
+            <input type="number" step="0.01" name="quizzes" required><br>
+
+            <label>Requirements Grade:</label>
+            <input type="number" step="0.01" name="requirements" required><br>
+
+            <label>Recitation Grade:</label>
+            <input type="number" step="0.01" name="recitation" required><br>
+
+            <button type="submit">Calculate</button>
+        </form>
+{% if error %}
+            <div class="error"><p><strong> Invalid input: Grades must be 0-100, absences 0-4</strong></p></div>
+{% endif %}
+       
+{% if result %}
+    <div class="result">
+        {% if result.status == "FAILED due to excessive absences" %}
+            <p><strong> FAILED due to excessive absences</strong></p>
+        {% else %}
+            <p><strong>{{ result.final_status }}</strong></p>
+            <p> Prelim Grade: <strong>{{ result.prelim_grade }}</strong></p>
+            <p> To PASS (75% overall): <strong>{{ result.pass_needed }}</strong></p>
+            <p> Dean's List (90% overall): <strong>{{ result.deans_needed }}</strong></p>
+        {% endif %}
+    </div>
+{% endif %}
+    </div>
+</body>
+</html>
