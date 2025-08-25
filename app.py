@@ -61,4 +61,4 @@ def grade_calculator():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+   
